@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Retro Walkman Player</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#111111">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<style>
+:root{--silver:#c7c9ca;--dark:#111;--mid:#555;--paper:#e8e0c8}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#090909;color:#eee;font-family:Arial,Helvetica,sans-serif;display:grid;place-items:center;padding:16px}
+.player{width:min(94vw,430px);background:linear-gradient(135deg,#e0e1e1,#a9acad 48%,#d3d4d4);border:1px solid #eee;border-radius:22px;padding:18px;box-shadow:0 18px 55px #000}
+.top{display:flex;justify-content:space-between;align-items:center;color:#222;font-size:12px;letter-spacing:2px;margin-bottom:10px}
+.window{background:#111;border-radius:15px;padding:18px 14px 16px;box-shadow:inset 0 0 0 2px #444,inset 0 8px 30px #000}
+.cassette{position:relative;aspect-ratio:1.58/1;background:#282828;border:2px solid #4b4b4b;border-radius:13px;overflow:hidden;box-shadow:0 4px 15px #000}
+.label{position:absolute;left:8%;right:8%;top:9%;height:34%;background:var(--paper);color:#111;border-radius:4px;text-align:center;padding:9px 7px 4px;overflow:hidden}
+.title{font-weight:700;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.artist{font-size:11px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#444}
+.reels{position:absolute;left:12%;right:12%;top:46%;display:flex;justify-content:space-between;align-items:center}
+.reel{width:74px;height:74px;border-radius:50%;background:#d9d9d4;border:9px solid #141414;display:grid;place-items:center;box-shadow:0 0 0 2px #777}
+.hub{width:42px;height:42px;border-radius:50%;background:repeating-conic-gradient(#333 0 12deg,#ddd 12deg 27deg);border:5px solid #eee}
+.playing .hub{animation:spin 1.15s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tape{position:absolute;height:4px;background:#4b2b1b;left:28%;right:28%;top:62%;opacity:.9}
+.bottomslot{position:absolute;left:25%;right:25%;bottom:7%;height:16%;background:#171717;clip-path:polygon(12% 0,88% 0,100% 100%,0 100%)}
+.meta{display:flex;justify-content:space-between;margin-top:12px;font-family:monospace;color:#bbb;font-size:12px}
+.progress{width:100%;accent-color:#333;margin:7px 0 10px}
+.controls{display:grid;grid-template-columns:1fr 1.35fr 1fr;gap:10px;margin-top:14px}
+button{border:0;border-radius:9px;background:#1b1b1b;color:#eee;min-height:48px;font-size:18px;box-shadow:0 3px 0 #000;touch-action:manipulation}
+button:active{transform:translateY(2px);box-shadow:0 1px 0 #000}
+.load{width:100%;margin-top:13px;background:#333;font-size:13px;letter-spacing:1.5px}
+.volumeRow{display:flex;align-items:center;gap:10px;color:#222;font-size:11px;letter-spacing:1px;margin-top:14px}
+.volumeRow input{flex:1;accent-color:#333}
+.note{font-size:11px;color:#333;text-align:center;margin-top:10px;line-height:1.35}
+input[type=file]{display:none}
+</style>
+</head>
+<body>
+<main class="player" id="player">
+  <div class="top"><strong>STEREO</strong><span>PORTABLE CASSETTE PLAYER</span></div>
+  <section class="window">
+    <div class="cassette">
+      <div class="label">
+        <div class="title" id="title">SELECT MUSIC</div>
+        <div class="artist" id="artist">RETRO MIX</div>
+      </div>
+      <div class="tape"></div>
+      <div class="reels"><div class="reel"><div class="hub"></div></div><div class="reel"><div class="hub"></div></div></div>
+      <div class="bottomslot"></div>
+    </div>
+    <div class="meta"><span id="elapsed">00:00</span><span id="trackNo">NO TAPE</span><span id="duration">00:00</span></div>
+    <input class="progress" id="progress" type="range" min="0" max="1000" value="0">
+  </section>
+
+  <div class="controls">
+    <button id="prev" aria-label="Previous track">◀◀</button>
+    <button id="play" aria-label="Play or pause">▶</button>
+    <button id="next" aria-label="Next track">▶▶</button>
+  </div>
+  <button class="load" id="load">LOAD MUSIC FROM PHONE</button>
+  <input id="files" type="file" accept="audio/*" multiple>
+  <div class="volumeRow"><span>VOLUME</span><input id="volume" type="range" min="0" max="1" value=".8" step=".01"></div>
+  <div class="note">Choose one or more audio files. Your files stay on your device.</div>
+  <audio id="audio"></audio>
+</main>
+
+<script>
+const audio=document.getElementById('audio'), files=document.getElementById('files');
+const load=document.getElementById('load'), play=document.getElementById('play');
+const prev=document.getElementById('prev'), next=document.getElementById('next');
+const title=document.getElementById('title'), artist=document.getElementById('artist');
+const elapsed=document.getElementById('elapsed'), duration=document.getElementById('duration');
+const progress=document.getElementById('progress'), volume=document.getElementById('volume');
+const trackNo=document.getElementById('trackNo'), player=document.getElementById('player');
+let list=[], index=0, urls=[];
+
+const fmt=s=>{if(!isFinite(s))return '00:00'; s=Math.max(0,Math.floor(s)); return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
+const clean=n=>n.replace(/\.[^.]+$/,'').replace(/_/g,' ').trim();
+
+load.onclick=()=>files.click();
+files.onchange=()=>{
+  urls.forEach(URL.revokeObjectURL); urls=[];
+  list=[...files.files]; if(!list.length)return;
+  urls=list.map(f=>URL.createObjectURL(f)); index=0; setTrack(false);
+};
+function setTrack(auto=true){
+  if(!list.length)return;
+  audio.src=urls[index];
+  let name=clean(list[index].name), parts=name.split(/\s+-\s+/);
+  if(parts.length>1){artist.textContent=parts.shift();title.textContent=parts.join(' - ')}
+  else {title.textContent=name;artist.textContent='PHONE AUDIO'}
+  trackNo.textContent=(index+1)+' / '+list.length;
+  progress.value=0; elapsed.textContent='00:00'; duration.textContent='00:00';
+  if(auto) audio.play().catch(()=>{});
+}
+play.onclick=()=>{if(!list.length){files.click();return} audio.paused?audio.play():audio.pause()};
+prev.onclick=()=>{if(!list.length)return; index=(index-1+list.length)%list.length;setTrack()};
+next.onclick=()=>{if(!list.length)return; index=(index+1)%list.length;setTrack()};
+audio.onplay=()=>{play.textContent='❚❚';player.classList.add('playing')};
+audio.onpause=()=>{play.textContent='▶';player.classList.remove('playing')};
+audio.onloadedmetadata=()=>duration.textContent=fmt(audio.duration);
+audio.ontimeupdate=()=>{
+  elapsed.textContent=fmt(audio.currentTime);
+  if(audio.duration)progress.value=Math.round(audio.currentTime/audio.duration*1000);
+};
+audio.onended=()=>{index=(index+1)%list.length;setTrack()};
+progress.oninput=()=>{if(audio.duration)audio.currentTime=progress.value/1000*audio.duration};
+volume.oninput=()=>audio.volume=volume.value;
+audio.volume=volume.value;
+
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+}
+</script>
+</body>
+</html>
