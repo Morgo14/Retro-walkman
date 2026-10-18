@@ -8,62 +8,69 @@
 <meta name="theme-color" content="#111111">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <style>
-:root{--silver:#c7c9ca;--dark:#111;--mid:#555;--paper:#e8e0c8}
+:root{color-scheme:dark;font-family:Arial,Helvetica,sans-serif;background:#080909;color:#e9e7df}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:#090909;color:#eee;font-family:Arial,Helvetica,sans-serif;display:grid;place-items:center;padding:16px}
-.player{width:min(94vw,430px);background:linear-gradient(135deg,#e0e1e1,#a9acad 48%,#d3d4d4);border:1px solid #eee;border-radius:22px;padding:18px;box-shadow:0 18px 55px #000}
-.top{display:flex;justify-content:space-between;align-items:center;color:#222;font-size:12px;letter-spacing:2px;margin-bottom:10px}
-.window{background:#111;border-radius:15px;padding:18px 14px 16px;box-shadow:inset 0 0 0 2px #444,inset 0 8px 30px #000}
-.cassette{position:relative;aspect-ratio:1.58/1;background:#282828;border:2px solid #4b4b4b;border-radius:13px;overflow:hidden;box-shadow:0 4px 15px #000}
-.label{position:absolute;left:8%;right:8%;top:9%;height:34%;background:var(--paper);color:#111;border-radius:4px;text-align:center;padding:9px 7px 4px;overflow:hidden}
-.title{font-weight:700;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.artist{font-size:11px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#444}
-.reels{position:absolute;left:12%;right:12%;top:46%;height:46%;display:flex;justify-content:space-between;align-items:center}
-.reel{position:relative;width:32%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#242424 63%,#111 65%);box-shadow:0 0 0 2px #777,inset 0 0 8px #000;display:grid;place-items:center}
-.pack{position:absolute;inset:4%;border-radius:50%;background:repeating-radial-gradient(circle,#513b2b 0 1px,#30241c 1px 2px,#604734 2px 3px);transform:scale(var(--pack,1));box-shadow:0 0 0 1px #6c503a;will-change:transform}
-.hub{position:relative;width:58%;height:58%;border-radius:50%;background:repeating-conic-gradient(#333 0 12deg,#ddd 12deg 27deg);border:4px solid #eee;box-shadow:0 0 0 2px #aaa,0 2px 4px #000;will-change:transform}
-.tape{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.tape path{fill:none;stroke:#65442e;stroke-width:1.3;vector-effect:non-scaling-stroke}
-.bottomslot{position:absolute;left:25%;right:25%;bottom:7%;height:16%;background:#171717;clip-path:polygon(12% 0,88% 0,100% 100%,0 100%)}
-.meta{display:flex;justify-content:space-between;margin-top:12px;font-family:monospace;color:#bbb;font-size:12px}
-.progress{width:100%;accent-color:#333;margin:7px 0 10px}
-.controls{display:grid;grid-template-columns:1fr 1.35fr 1fr;gap:10px;margin-top:14px}
-button{border:0;border-radius:9px;background:#1b1b1b;color:#eee;min-height:48px;font-size:18px;box-shadow:0 3px 0 #000;touch-action:manipulation}
-button:active{transform:translateY(2px);box-shadow:0 1px 0 #000}
-.load{width:100%;margin-top:13px;background:#333;font-size:13px;letter-spacing:1.5px}
-.volumeRow{display:flex;align-items:center;gap:10px;color:#222;font-size:11px;letter-spacing:1px;margin-top:14px}
-.volumeRow input{flex:1;accent-color:#333}
-.note{font-size:11px;color:#333;text-align:center;margin-top:10px;line-height:1.35}
-input[type=file]{display:none}
+body{margin:0;background:radial-gradient(ellipse at 50% 40%,#252727,#080909 75%)}
+.player{width:100%;height:100vh;height:100dvh;padding:max(8px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left));display:grid;grid-template-rows:minmax(0,1fr) auto;gap:8px}
+.window{min-height:0;display:flex;align-items:center;justify-content:center}
+.cassette{position:relative;container-type:inline-size;width:min(100%,calc((100dvh - 86px)*1.65));aspect-ratio:1.65;flex-shrink:0;overflow:hidden;border:2px solid #4a4a46;border-radius:3.4% / 5.6%;background:repeating-linear-gradient(0deg,#ffffff03 0 1px,transparent 1px 3px),linear-gradient(145deg,#343633,#141613 45%,#272925);box-shadow:inset 0 0 0 3px #121410,inset 0 0 0 5px #3c3e38,0 15px 40px #0009}
+.cassette:before{content:'';position:absolute;inset:3% 3%;border:1px solid #7774;border-radius:2.5%}
+.label{position:absolute;left:6%;right:6%;top:6%;height:76%;border-radius:2% / 3%;background:repeating-linear-gradient(0deg,transparent 0 3px,#77694709 3px 4px),linear-gradient(110deg,#e4ddbf,#f3ebd4 45%,#d9d0b2);color:#282a24;box-shadow:0 0 0 1px #181b15,inset 0 0 12px #8b795332;overflow:hidden}
+.label:after{content:'';position:absolute;left:0;right:0;top:27%;height:5%;background:linear-gradient(0deg,#262c29 0 23%,#ded3ae 23% 36%,#9f392a 36% 100%)}
+.brand{position:absolute;left:4%;top:5%;font-size:2cqw;font-weight:bold;letter-spacing:.22em}.type{position:absolute;right:4%;top:5%;font-size:1.6cqw;letter-spacing:.12em}
+.title{position:absolute;top:13%;left:11%;right:11%;font-family:Georgia,serif;font-style:italic;font-size:3.7cqw;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+.artist{position:absolute;top:24%;left:15%;right:15%;font-size:1.6cqw;text-align:center;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;z-index:1}
+.side{position:absolute;left:4%;top:38%;font-size:4cqw;font-weight:bold}.length{position:absolute;right:3%;top:39%;font-size:3.8cqw;font-weight:bold;writing-mode:vertical-rl}.fidelity{position:absolute;left:4%;bottom:4%;font-size:1.4cqw;letter-spacing:.14em}
+.reelbed{position:absolute;left:14%;right:14%;top:34%;height:40%;border:2px solid #3b3d35;border-radius:13% / 35%;background:linear-gradient(160deg,#ffffff13,#0006 40%,#ffffff05),#191e1b;box-shadow:0 1px 0 #fff5,inset 0 3px 12px #000}
+.reelbed:after{content:'';position:absolute;inset:2% 36%;border:1px solid #71695066;background:repeating-linear-gradient(90deg,transparent 0 19%,#c4b88755 19% 20%);border-radius:3px}
+.reels{position:absolute;left:15%;right:15%;top:35%;height:40%;display:flex;justify-content:space-between;align-items:center}
+.reel{position:relative;width:min(30%,40cqh);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#302d24 64%,#111511 66%);box-shadow:0 0 0 1px #b5ad8a77,inset 0 0 8px #000;display:grid;place-items:center}
+.pack{position:absolute;inset:4%;border-radius:50%;background:repeating-radial-gradient(circle,#55432e 0 1px,#29251b 1px 2px,#6c5439 2px 3px);transform:scale(var(--pack,1));box-shadow:0 0 0 1px #7e6447;will-change:transform}
+.hub{position:relative;width:58%;height:58%;border-radius:50%;background:repeating-conic-gradient(#d6d3be 0 34deg,#373d34 34deg 60deg);border:1.1cqw solid #c9cbbd;box-shadow:0 0 0 1px #ebe9d5,inset 0 0 0 1px #7b7e70,0 3px 5px #000;will-change:transform}
+.hub:after{content:'';position:absolute;inset:28%;border-radius:50%;background:#171d17;box-shadow:0 0 0 1px #8e9282}
+.tape{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.tape path{fill:none;stroke:#715331;stroke-width:1.5;vector-effect:non-scaling-stroke}
+.screw{position:absolute;width:2.6%;aspect-ratio:1;border-radius:50%;background:linear-gradient(130deg,#c3c6ba,#5a6058 50%,#b9bdb0);box-shadow:0 0 0 2px #0c100b,1px 2px 3px #000}.screw:after{content:'';position:absolute;left:18%;right:18%;top:44%;height:12%;background:#343b30;transform:rotate(-30deg)}.s1{left:2.5%;top:4%}.s2{right:2.5%;top:4%}.s3{left:2.5%;bottom:4%}.s4{right:2.5%;bottom:4%}
+.bottomslot{position:absolute;left:23%;right:23%;bottom:0;height:15%;background:repeating-linear-gradient(0deg,#30352c 0 1px,#22271f 1px 3px);clip-path:polygon(9% 0,91% 0,100% 100%,0 100%);box-shadow:inset 0 2px 2px #ffffff24}
+.holes{position:absolute;left:30%;right:30%;bottom:3.5%;height:5%;display:flex;justify-content:space-between;align-items:center}.holes i{width:5%;aspect-ratio:1;border-radius:50%;background:#040704;box-shadow:0 1px 0 #7778}.holes i:nth-child(2){width:17%;aspect-ratio:2.8;border-radius:2px}
+.meta{position:absolute;left:21%;right:21%;bottom:20%;display:flex;justify-content:space-between;color:#c7c6b3;font:1.7cqw monospace;z-index:2}
+.progress{position:absolute;left:19%;width:62%;bottom:14%;height:24px;margin:0;accent-color:#bcb69b;z-index:3;background:transparent;cursor:pointer}
+.toolbar{display:flex;gap:8px;align-items:center;justify-content:center;min-height:48px}
+.controls{display:flex;gap:6px}button{min-width:48px;min-height:44px;border:1px solid #53574b;border-radius:7px;background:linear-gradient(#363b31,#1b2018);color:#e2dfcc;box-shadow:inset 0 1px 0 #ffffff14,0 2px 2px #000;font-size:18px;touch-action:manipulation;cursor:pointer}button:active{transform:translateY(1px)}button:focus-visible,input:focus-visible{outline:2px solid #eee2bc;outline-offset:3px}#play{min-width:66px}
+.load{font-size:11px;letter-spacing:.12em;padding:0 16px}.volumeRow{display:flex;align-items:center;gap:7px;color:#9fa38f;font-size:10px;letter-spacing:.1em}.volumeRow input{width:90px;accent-color:#c5bea0}.note{position:absolute;left:0;right:0;top:10%;text-align:center;color:#a7a58f;font-size:12px;letter-spacing:.16em;pointer-events:none}.note span{display:block;font-size:10px;letter-spacing:0;margin-top:8px}input[type=file]{display:none}
+@media(orientation:landscape){.note{display:none}.cassette{width:100%;height:100%;aspect-ratio:auto;container-type:size}}
+@media(orientation:portrait){.player{gap:18px;padding-bottom:max(24px,env(safe-area-inset-bottom))}.cassette{width:100%}.toolbar{flex-wrap:wrap}.volumeRow{display:none}.progress{height:20px;bottom:12%}.note{top:12%}}
+@media(max-height:340px) and (orientation:landscape){.player{gap:3px;padding-top:3px;padding-bottom:3px}.cassette{width:min(100%,calc((100dvh - 58px)*1.65))}.toolbar{min-height:44px}}
 </style>
 </head>
 <body>
 <main class="player" id="player">
-  <div class="top"><strong>STEREO</strong><span>PORTABLE CASSETTE PLAYER</span></div>
-  <section class="window">
+  <div class="note">TURN YOUR PHONE SIDEWAYS<span>Load your music and press play</span></div>
+  <section class="window" aria-label="Vintage cassette player">
     <div class="cassette">
       <div class="label">
-        <div class="title" id="title">SELECT MUSIC</div>
-        <div class="artist" id="artist">RETRO MIX</div>
+        <span class="brand">RETRO SOUND</span><span class="type">NORMAL POSITION · TYPE I</span>
+        <div class="title" id="title">Your favourite mixtape</div>
+        <div class="artist" id="artist">SELECT MUSIC TO BEGIN</div>
+        <span class="side">A</span><span class="length">C·90</span><span class="fidelity">LOW NOISE · HIGH OUTPUT</span>
       </div>
+      <div class="reelbed"></div>
       <svg class="tape" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path id="tapePath" d=""/></svg>
       <div class="reels" aria-hidden="true"><div class="reel"><div class="pack"></div><div class="hub"></div></div><div class="reel"><div class="pack"></div><div class="hub"></div></div></div>
-      <div class="bottomslot"></div>
+      <div class="bottomslot"></div><div class="holes" aria-hidden="true"><i></i><i></i><i></i></div>
+      <i class="screw s1" aria-hidden="true"></i><i class="screw s2" aria-hidden="true"></i><i class="screw s3" aria-hidden="true"></i><i class="screw s4" aria-hidden="true"></i>
+      <div class="meta"><span id="elapsed">00:00</span><span id="trackNo">NO TAPE</span><span id="duration">00:00</span></div>
+      <input class="progress" id="progress" type="range" min="0" max="1000" value="0" aria-label="Playback position">
     </div>
-    <div class="meta"><span id="elapsed">00:00</span><span id="trackNo">NO TAPE</span><span id="duration">00:00</span></div>
-    <input class="progress" id="progress" type="range" min="0" max="1000" value="0">
   </section>
-
-  <div class="controls">
-    <button id="prev" aria-label="Previous track">◀◀</button>
-    <button id="play" aria-label="Play or pause">▶</button>
-    <button id="next" aria-label="Next track">▶▶</button>
+  <div class="toolbar">
+    <div class="controls">
+      <button id="prev" aria-label="Previous track">◀◀</button><button id="play" aria-label="Play or pause">▶</button><button id="next" aria-label="Next track">▶▶</button>
+    </div>
+    <button class="load" id="load">LOAD MUSIC</button>
+    <div class="volumeRow"><label for="volume">VOL</label><input id="volume" type="range" min="0" max="1" value=".8" step=".01"></div>
+    <button id="fullscreen" aria-label="Enter full screen" title="Full screen">⛶</button>
   </div>
-  <button class="load" id="load">LOAD MUSIC FROM PHONE</button>
-  <input id="files" type="file" accept="audio/*" multiple>
-  <div class="volumeRow"><span>VOLUME</span><input id="volume" type="range" min="0" max="1" value=".8" step=".01"></div>
-  <div class="note">Choose one or more audio files. Your files stay on your device.</div>
-  <audio id="audio"></audio>
+  <input id="files" type="file" accept="audio/*" multiple><audio id="audio"></audio>
 </main>
 
 <script>
@@ -83,14 +90,28 @@ const hubs=[...document.querySelectorAll('.hub')];
 const tapePath=document.getElementById('tapePath');
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
 let frame=0, lastFrame=null, angles=[0,0], radii=[1,.66];
+let tapeGeometry=[25.5,74.5,55,55,15.94,15.94];
+const cassette=document.querySelector('.cassette');
+function measureTape(){
+  const box=cassette.getBoundingClientRect();
+  if(!box.width||!box.height)return;
+  const reels=[...document.querySelectorAll('.reel')].map(reel=>reel.getBoundingClientRect());
+  tapeGeometry=[...reels.map(r=>(r.left+r.width/2-box.left)/box.width*100),
+    ...reels.map(r=>(r.top+r.height/2-box.top)/box.height*100),
+    ...reels.map(r=>r.height*.46/box.height*100)];
+  drawTape(tapePosition());
+}
+window.addEventListener('resize',measureTape);
+if('ResizeObserver' in window)new ResizeObserver(measureTape).observe(cassette);
 function drawTape(fraction){
   const p=Math.min(1,Math.max(0,fraction));
   const core=.66, area=1-core*core;
   radii=[Math.sqrt(core*core+(1-p)*area),Math.sqrt(core*core+p*area)];
   packs.forEach((pack,i)=>pack.style.setProperty('--pack',radii[i]));
   // Coordinates match the responsive reel centres and tape-pack radii.
-  const leftY=69+17.68*radii[0], rightY=69+17.68*radii[1];
-  tapePath.setAttribute('d',`M 24.16 ${leftY} L 38 89 L 62 89 L 75.84 ${rightY}`);
+  const [leftX,rightX,leftCentre,rightCentre,leftRadius,rightRadius]=tapeGeometry;
+  const leftY=leftCentre+leftRadius*radii[0], rightY=rightCentre+rightRadius*radii[1];
+  tapePath.setAttribute('d',`M ${leftX} ${leftY} L 38 91 L 62 91 L ${rightX} ${rightY}`);
 }
 function tapePosition(){
   return Number.isFinite(audio.duration)&&audio.duration>0?audio.currentTime/audio.duration:0;
@@ -114,15 +135,17 @@ audio.addEventListener('playing',startTape);
 ['pause','waiting','ended','emptied'].forEach(event=>audio.addEventListener(event,stopTape));
 audio.addEventListener('seeked',()=>drawTape(tapePosition()));
 document.addEventListener('visibilitychange',()=>{lastFrame=null});
-drawTape(0);
+drawTape(0);measureTape();
 
 const fmt=s=>{if(!isFinite(s))return '00:00'; s=Math.max(0,Math.floor(s)); return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
 const clean=n=>n.replace(/\.[^.]+$/,'').replace(/_/g,' ').trim();
 
 load.onclick=()=>files.click();
 files.onchange=()=>{
+  const selected=[...files.files]; if(!selected.length)return;
+  audio.pause();
   urls.forEach(URL.revokeObjectURL); urls=[];
-  list=[...files.files]; if(!list.length)return;
+  list=selected;
   urls=list.map(f=>URL.createObjectURL(f)); index=0; setTrack(false);
 };
 function setTrack(auto=true){
@@ -149,6 +172,17 @@ audio.ontimeupdate=()=>{
 };
 audio.onended=()=>{index=(index+1)%list.length;setTrack()};
 progress.oninput=()=>{if(audio.duration)audio.currentTime=progress.value/1000*audio.duration};
+const fullScreen=document.getElementById('fullscreen');
+if(!document.fullscreenEnabled)fullScreen.hidden=true;
+fullScreen.onclick=async()=>{
+  try{if(document.fullscreenElement)await document.exitFullscreen();
+  else await document.documentElement.requestFullscreen();}catch{}
+};
+document.addEventListener('fullscreenchange',()=>{
+  const active=!!document.fullscreenElement;
+  fullScreen.setAttribute('aria-label',active?'Exit full screen':'Enter full screen');
+  fullScreen.title=active?'Exit full screen':'Full screen';
+});
 volume.oninput=()=>audio.volume=volume.value;
 audio.volume=volume.value;
 
@@ -158,3 +192,4 @@ if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
 </script>
 </body>
 </html>
+
