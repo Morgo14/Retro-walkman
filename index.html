@@ -37,9 +37,29 @@ body{margin:0;background:radial-gradient(ellipse at 50% 40%,#252727,#080909 75%)
 .toolbar{display:flex;gap:8px;align-items:center;justify-content:center;min-height:48px}
 .controls{display:flex;gap:6px}button{min-width:48px;min-height:44px;border:1px solid #53574b;border-radius:7px;background:linear-gradient(#363b31,#1b2018);color:#e2dfcc;box-shadow:inset 0 1px 0 #ffffff14,0 2px 2px #000;font-size:18px;touch-action:manipulation;cursor:pointer}button:active{transform:translateY(1px)}button:focus-visible,input:focus-visible{outline:2px solid #eee2bc;outline-offset:3px}#play{min-width:66px}
 .load{font-size:11px;letter-spacing:.12em;padding:0 16px}.volumeRow{display:flex;align-items:center;gap:7px;color:#9fa38f;font-size:10px;letter-spacing:.1em}.volumeRow input{width:90px;accent-color:#c5bea0}.note{position:absolute;left:0;right:0;top:10%;text-align:center;color:#a7a58f;font-size:12px;letter-spacing:.16em;pointer-events:none}.note span{display:block;font-size:10px;letter-spacing:0;margin-top:8px}input[type=file]{display:none}
-@media(orientation:landscape){.note{display:none}.cassette{width:100%;height:100%;aspect-ratio:auto;container-type:size}}
+/* Fit the cassette without stretching; keep transport controls beside it. */
+.window{min-width:0;container-type:size}
+.cassette{width:min(100cqw,165cqh);background:repeating-linear-gradient(0deg,#ffffff03 0 1px,transparent 1px 3px),linear-gradient(145deg,#34373a,#141618 45%,#272a2d)}
+.label{background:repeating-linear-gradient(0deg,transparent 0 3px,#45494d09 3px 4px),linear-gradient(110deg,#b9bdc0,#eceeef 45%,#a9aeb2);color:#24272a;box-shadow:0 0 0 1px #181b15,inset 0 0 12px #45494d32}
+.label:after{background:linear-gradient(0deg,#262c29 0 23%,#dce0e3 23% 36%,#616970 36% 100%)}
+.title{font-family:Arial,Helvetica,sans-serif;font-style:normal;font-weight:600}
+.artist{top:22.5%}
+.meta{color:#e0e3e5}
+.progress,.volumeRow input{accent-color:#c4cbd0}
+button{border-color:#565d63;background:linear-gradient(#383d42,#191c1f);color:#edf0f2}
+button:focus-visible,input:focus-visible{outline-color:#e0e8ee}
+.volumeRow{color:#b6bfc5}
+@media(orientation:landscape){
+  .player{grid-template-columns:minmax(0,1fr) clamp(112px,16vw,152px);grid-template-rows:minmax(0,1fr);gap:12px}
+  .note{display:none}
+  .toolbar{min-width:0;flex-direction:column;gap:12px}
+  .controls{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+  #play{grid-column:1 / -1;grid-row:1;min-height:48px}
+  .load{width:100%;padding:0 6px}
+  .volumeRow{flex-direction:column;gap:4px}
+}
 @media(orientation:portrait){.player{gap:18px;padding-bottom:max(24px,env(safe-area-inset-bottom))}.cassette{width:100%}.toolbar{flex-wrap:wrap}.volumeRow{display:none}.progress{height:20px;bottom:12%}.note{top:12%}}
-@media(max-height:340px) and (orientation:landscape){.player{gap:3px;padding-top:3px;padding-bottom:3px}.cassette{width:min(100%,calc((100dvh - 58px)*1.65))}.toolbar{min-height:44px}}
+@media(max-height:340px) and (orientation:landscape){.player{gap:8px}.toolbar{gap:6px}.volumeRow{display:none}}
 </style>
 </head>
 <body>

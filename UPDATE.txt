@@ -1,1 +1,15 @@
-Extract this ZIP. In github.com/Morgo14/Retro-walkman use Add file > Upload files. Upload index.html and sw.js together to replace the existing files. Commit changes. Wait for GitHub Pages to deploy, then open the player online once. Close it and reopen to load the updated cached version. Your music files stay on your phone.
+LANDSCAPE CASSETTE UPDATE
+
+1. Extract this ZIP.
+2. Open your Morgo14/Retro-walkman GitHub repository.
+3. Choose Add file > Upload files.
+4. Upload index.html and sw.js together, replacing the existing files.
+5. Commit changes, then wait for GitHub Pages to finish publishing.
+6. Open the player online, close it, then reopen to receive the updated offline version.
+7. Enable auto-rotate on your phone and turn it sideways. The cassette fills the available height while keeping its original proportions, with controls beside it. Tap the square full-screen button for a larger view.
+
+Black-and-silver label, clearer title spacing, and a compact side control panel in landscape. Playback, song-title display and tape animation code are unchanged. Portrait keeps its controls below the cassette. Only index.html and sw.js need uploading; the cache version is increased so installed players receive the new layout.
+
+To undo: revert the upload commit in GitHub. Existing manifest and icons stay as they are. Load music from your phone as before. The appearance uses CSS and SVG, with no external images, fonts or libraries.
+
+Based on repository main commit 4bf3ae0e811cd0f51ccad913d28a7cb29b26a05c, inspected 18 October 2026. Static checks confirm the playback script is unchanged. Android visual and playback checks are still needed on the phone because a browser runtime was unavailable here.
