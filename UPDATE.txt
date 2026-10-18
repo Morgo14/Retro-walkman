@@ -1,0 +1,1 @@
+Extract this ZIP. In github.com/Morgo14/Retro-walkman use Add file > Upload files. Upload index.html and sw.js together to replace the existing files. Commit changes. Wait for GitHub Pages to deploy, then open the player online once. Close it and reopen to load the updated cached version. Your music files stay on your phone.
