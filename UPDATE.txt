@@ -1,15 +1,7 @@
-LANDSCAPE CASSETTE UPDATE
+HANDWRITTEN TITLE UPDATE
 
-1. Extract this ZIP.
-2. Open your Morgo14/Retro-walkman GitHub repository.
-3. Choose Add file > Upload files.
-4. Upload index.html and sw.js together, replacing the existing files.
-5. Commit changes, then wait for GitHub Pages to finish publishing.
-6. Open the player online, close it, then reopen to receive the updated offline version.
-7. Enable auto-rotate on your phone and turn it sideways. The cassette fills the available height while keeping its original proportions, with controls beside it. Tap the square full-screen button for a larger view.
+Extract this ZIP, then upload index.html and sw.js together to your Retro-walkman GitHub repository, replacing the existing files. Commit the upload and wait for GitHub Pages to publish. Open the player online, close it and reopen so the updated offline version can activate.
 
-Black-and-silver label, clearer title spacing, and a compact side control panel in landscape. Playback, song-title display and tape animation code are unchanged. Portrait keeps its controls below the cassette. Only index.html and sw.js need uploading; the cache version is increased so installed players receive the new layout.
+The track title now uses a flowing handwritten font, using the phone's built-in cursive font with handwriting font fallbacks. It works offline and needs no extra font files. Title size and spacing leave room for the artist name. Playback, animation and the cassette layout stay as before.
 
-To undo: revert the upload commit in GitHub. Existing manifest and icons stay as they are. Load music from your phone as before. The appearance uses CSS and SVG, with no external images, fonts or libraries.
-
-Based on repository main commit 4bf3ae0e811cd0f51ccad913d28a7cb29b26a05c, inspected 18 October 2026. Static checks confirm the playback script is unchanged. Android visual and playback checks are still needed on the phone because a browser runtime was unavailable here.
+Only title CSS and the offline cache version changed. To undo, revert the upload commit in GitHub. Code comparison confirmed that the playback script is unchanged. The final font appearance depends on installed device fonts and should be checked on your phone.
